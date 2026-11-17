@@ -30,8 +30,29 @@ h1,h2,h3,.disp{font-family:Oswald,"Arial Narrow",Arial,sans-serif;text-transform
 .hero{position:relative;min-height:0;padding:0 0 70px;overflow:hidden;text-align:center;background:
   radial-gradient(900px 500px at 78% 30%,rgba(192,57,47,.22),transparent 60%),
   repeating-linear-gradient(135deg,#131110 0 2px,#0f0e0d 2px 14px)}
-.hero .bg{position:relative;width:100%;height:min(56.3vw,720px);object-fit:cover;object-position:center 30%;display:block}
-.hero:after{content:"";position:absolute;left:0;right:0;top:0;height:min(56.3vw,720px);background:linear-gradient(0deg,var(--bg) 0%,rgba(13,12,11,.2) 34%,transparent 60%),linear-gradient(180deg,rgba(13,12,11,.55),transparent 22%);pointer-events:none}
+.hero .scene{position:relative;width:100%;height:min(56.3vw,720px);overflow:hidden;container-type:size}
+.hero .stage{position:absolute;left:0;width:100%;aspect-ratio:1672/941;top:calc((100cqh - 100cqw * 941 / 1672) * .3);transform-origin:62% 42%;animation:hIn 2.2s cubic-bezier(.2,.7,.2,1) both,hDrift 26s ease-in-out 2.2s infinite alternate}
+.hero .bg{width:100%;height:100%;display:block}
+.hero .fx{position:absolute;pointer-events:none}
+.hero .flag{left:41.87%;top:12.75%;width:20.93%;height:26.57%;background:url(img/hero.jpg) 52.95% 17.37%/477.71% 376.4% no-repeat;
+  clip-path:polygon(12.9% 11.2%,40% 14%,57.1% 24%,80% 32%,98.6% 44%,88.6% 50%,68.6% 55.2%,60% 63.2%,48.6% 74%,31.4% 86%,11.4% 96.8%,3.4% 92%,11.4% 16%);filter:url(#hwave)}
+.hero .moon{left:58%;top:-2%;width:30%;aspect-ratio:1;background:radial-gradient(closest-side,rgba(255,170,90,.55),rgba(255,110,50,.18) 55%,transparent);mix-blend-mode:screen;animation:hPulse 5s ease-in-out infinite}
+.hero .gate{left:78.5%;top:24%;width:6%;aspect-ratio:1;background:radial-gradient(closest-side,rgba(255,215,120,.9),transparent);mix-blend-mode:screen;animation:hFlick 3.1s steps(9) infinite}
+.hero .logo-fx{left:34%;top:24%;width:56%;height:46%;background:url(img/hero.jpg) 77.27% 44.44%/178.57% 217.39% no-repeat;filter:brightness(2.6) saturate(1.2) contrast(1.05);-webkit-mask:linear-gradient(105deg,transparent 42%,#000 50%,transparent 58%) 100% 0/300% 100% no-repeat,radial-gradient(closest-side,#000 70%,transparent);-webkit-mask-composite:source-in;mask:linear-gradient(105deg,transparent 42%,#000 50%,transparent 58%) 100% 0/300% 100% no-repeat,radial-gradient(closest-side,#000 70%,transparent);mask-composite:intersect;animation:hShine 7s cubic-bezier(.5,0,.3,1) 2.4s infinite both}
+.hero .fog{left:-20%;width:140%;bottom:0;height:45%;background:radial-gradient(40% 60% at 25% 80%,rgba(120,40,30,.35),transparent 70%),radial-gradient(35% 50% at 70% 90%,rgba(90,30,25,.3),transparent 70%);animation:hFog 30s ease-in-out infinite alternate;mix-blend-mode:screen}
+.hero canvas.fx{left:0;top:0;width:100%;height:100%}
+.hero .wrap>*{animation:hUp 1s cubic-bezier(.2,.7,.2,1) both}
+.hero .wrap>:nth-child(2){animation-delay:.12s}.hero .wrap>:nth-child(3){animation-delay:.24s}.hero .wrap>:nth-child(4){animation-delay:.36s}.hero .wrap>:nth-child(5){animation-delay:.48s}
+.hero .logo-fx:after{content:"";position:absolute;inset:0;background:rgba(255,245,235,.85);mix-blend-mode:overlay}
+@keyframes hIn{from{opacity:0;transform:scale(1.14);filter:brightness(.3) blur(6px)}to{opacity:1;transform:scale(1.02);filter:none}}
+@keyframes hDrift{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.08) translate(-1.2%,-.8%)}}
+@keyframes hPulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes hFlick{0%,100%{opacity:.6}20%{opacity:.85}35%{opacity:.5}60%{opacity:.95}80%{opacity:.7}}
+@keyframes hShine{0%{-webkit-mask-position:100% 0,0 0;mask-position:100% 0,0 0}45%,100%{-webkit-mask-position:0 0,0 0;mask-position:0 0,0 0}}
+@keyframes hFog{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+@keyframes hUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.hero .stage,.hero .stage *,.hero .stage:before,.hero .wrap>*{animation:none!important}.hero .flag{filter:none}.hero canvas.fx{display:none}}
+.hero:after{content:"";position:absolute;z-index:1;left:0;right:0;top:0;height:min(56.3vw,720px);background:linear-gradient(0deg,var(--bg) 0%,rgba(13,12,11,.2) 34%,transparent 60%),linear-gradient(180deg,rgba(13,12,11,.55),transparent 22%);pointer-events:none}
 .hero .wrap{position:relative;z-index:2;margin-top:-90px;display:flex;flex-direction:column;align-items:center}
 .tag{display:inline-flex;gap:10px;align-items:center;font:600 13px Oswald,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(210,168,90,.4);padding:6px 12px;margin-bottom:22px}
 .tag b{width:7px;height:7px;background:var(--gold);border-radius:50%}
@@ -93,7 +114,7 @@ footer a{display:block;margin-bottom:8px}footer a:hover{color:var(--ink)}
 .legal{border-top:1px solid var(--line);margin-top:36px;padding-top:20px;font-size:13px;grid-column:1/-1}
 @media(max-width:980px){.row{grid-template-columns:1fr}.hero .wrap{margin-top:-30px}.row.flip .txt{order:0}.frame{transform:none}h1{font-size:46px}h2{font-size:32px}
  .strip .wrap,.cards{grid-template-columns:1fr 1fr}.strip div:nth-child(3){border-left:0}.top nav{display:none}.head{display:block}.head p{margin-top:12px}
- .world .g{grid-template-columns:1fr}.world img{height:200px}.rel{grid-template-columns:1fr;gap:8px}footer .wrap{grid-template-columns:1fr}.hero{padding-top:120px;min-height:0}section{padding:64px 0}.row{margin-bottom:64px;gap:28px}}
+ .world .g{grid-template-columns:1fr}.world img{height:200px}.rel{grid-template-columns:1fr;gap:8px}footer .wrap{grid-template-columns:1fr}.hero{padding-top:120px;min-height:0}.hero:after{top:120px}section{padding:64px 0}.row{margin-bottom:64px;gap:28px}}
 @media(max-width:560px){.cards,.strip .wrap{grid-template-columns:1fr}.strip div{border-left:0;border-top:1px solid var(--line)}.strip div:first-child{border-top:0}h1{font-size:38px}}
 </style>
 </head>
@@ -105,7 +126,15 @@ footer a{display:block;margin-bottom:8px}footer a:hover{color:var(--ink)}
 </div></div>
 
 <header class="hero">
-  <img class="bg" src="img/hero.jpg" alt="dBot — Silkroad Bot">
+  <div class="scene"><div class="stage">
+    <img class="bg" src="img/hero.jpg" alt="dBot — Silkroad Bot">
+    <div class="fx moon"></div><div class="fx gate"></div><div class="fx flag"></div>
+    <div class="fx logo-fx"></div><div class="fx fog"></div>
+    <canvas class="fx" id="embers"></canvas>
+  </div></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="hwave" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.035" numOctaves="2" seed="7"><animate attributeName="baseFrequency" dur="5s" values="0.012 0.035;0.016 0.042;0.012 0.035" repeatCount="indefinite"/></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
   <div class="wrap">
       <div class="tag"><b></b><span id="tagver">Miễn phí · Windows</span></div>
       <h1>Bot Silkroad <em>trọn gói</em><br>cho dân cày Việt</h1>
@@ -191,6 +220,26 @@ footer a{display:block;margin-bottom:8px}footer a:hover{color:var(--ink)}
 </div></footer>
 
 <script>
+(function(){
+  var c=document.getElementById('embers');if(!c||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var x=c.getContext('2d'),w=0,h=0,dpr=Math.min(devicePixelRatio||1,2),ps=[],on=true,raf=0,last=0;
+  function size(){w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(90,w/14));while(ps.length<n)ps.push(make(true));ps.length=n}
+  function make(any){return{x:Math.random()*w,y:any?Math.random()*h:h+10,r:.6+Math.random()*1.9,v:.25+Math.random()*.7,
+    s:Math.random()*6.28,k:.4+Math.random()*1.2,a:.35+Math.random()*.6,hue:8+Math.random()*30}}
+  function tick(t){raf=0;if(!on)return;var dt=Math.min(50,t-(last||t))/16.7;last=t;
+    x.clearRect(0,0,w,h);x.globalCompositeOperation='lighter';
+    for(var i=0;i<ps.length;i++){var p=ps[i];p.y-=p.v*dt;p.s+=.02*dt;p.x+=Math.sin(p.s)*.35*p.k*dt;
+      if(p.y<-10){ps[i]=make(false);continue}
+      var f=p.a*Math.min(1,p.y/(h*.35))*(.75+.25*Math.sin(t/180+p.s*4)),g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      g.addColorStop(0,'hsla('+p.hue+',100%,70%,'+f+')');g.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');
+      x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r*4,0,6.283);x.fill()}
+    raf=requestAnimationFrame(tick)}
+  function go(){if(on&&!raf){last=0;raf=requestAnimationFrame(tick)}}
+  size();addEventListener('resize',size);
+  new IntersectionObserver(function(e){on=e[0].isIntersecting&&!document.hidden;go()}).observe(c);
+  document.addEventListener('visibilitychange',function(){on=!document.hidden;go()});go();
+})();
 addEventListener('scroll',function(){document.getElementById('top').classList.toggle('solid',scrollY>40)});
 fetch('https://api.github.com/repos/TroniePh/dbot/releases?per_page=4').then(function(r){return r.ok?r.json():[]}).then(function(list){
   list=(list||[]).filter(function(x){return !x.draft&&!x.prerelease});
